@@ -1,0 +1,12 @@
+{application, rumor_mill,
+ [
+  {description, ""},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { rumor_mill_app, []}},
+  {env, []}
+ ]}.

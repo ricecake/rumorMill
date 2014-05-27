@@ -1,0 +1,7 @@
+basic idea of the algo is that instead of leaving it entirely up to chance who we gossip to, we keep track of who we have already sent the message to.
+when we send the message out, we also send the list of who we sent the message to as part of the header, and the recipient acks message reciept
+by sending back their own list of who has the message.  this way, we should be able to gossip more efficiently, by having information about who knows what
+propagate around the horde in parallel.
+
+messages to be gossiped are pushed on to a stack, so that on average, new messages tend to be propagated preferentially to ensure the system doesn't stagnate.
+once a message on the stack reaches 100% dispersal, it is removed from the stack.  if there is no message to propagate on the stack, then we gossip a preemptable list of node liveness information so that we can maintain awareness of horde health.
