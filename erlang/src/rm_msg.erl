@@ -16,3 +16,10 @@ get(Msg, Field) when is_map(Msg) -> map:get(Field, Msg).
 serialize(Msg) when is_map(Msg) -> <<>>.
 
 deserialize(Binary) when is_binary(Binary) -> #{}.
+
+hget(Map, Key, Default) -> 
+	case map:find(Key, Map) of
+		{ok, Value} -> Value;
+		error       -> Default
+	end.
+
