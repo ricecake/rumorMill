@@ -11,21 +11,27 @@
 -define(ACK,    3).
 -define(RESET,  4).
 
--define(Fields, [{type, 1, ?STD}, {phase, 4, ?SYN}, {seq, 3, 0}, {id, 128, 0}, {body, 0, <<>>}]).
+-define(Fields, [{type, 1, ?STD}, {phase, 4, ?SYN}, {seq, 3, 0}, {id, 128, 0}, {body, 0, 0}]).
 
 new() -> #{}.
 new(Type) when is_atom(Type) -> #{type => Type}.
 
-set(Msg, Field, Value) when is_map(Msg) -> map:put(Field, Value, Msg).
+set(Msg, Field, Value) when is_map(Msg) -> maps:put(Field, Value, Msg).
 
-get(Msg, Field) when is_map(Msg) -> map:get(Field, Msg).
+get(Msg, Field) when is_map(Msg) -> maps:get(Field, Msg).
 
-serialize(Msg) when is_map(Msg) -> <<>>.
+serialize(Msg) when is_map(Msg) ->
+	<< <<(encode_field(hget(Msg, Field, Default), Size))/bits>> || {Field, Size, Default} <- ?Fields >>.
+	
 
 deserialize(Binary) when is_binary(Binary) -> #{}.
 
+encode_field(Value, Size) when is_binary(Value) -> <<0:(Size - (bit_size(Value) rem Size)), Value/bits>>;
+encode_field(Value, 0)    -> vlq:encode(Value);
+encode_field(Value, Size) -> <<Value:Size>>.
+
 hget(Map, Key, Default) -> 
-	case map:find(Key, Map) of
+	case maps:find(Key, Map) of
 		{ok, Value} -> Value;
 		error       -> Default
 	end.
