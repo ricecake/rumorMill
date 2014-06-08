@@ -6,12 +6,12 @@
 -define(ALIVE, 0).
 -define(STD,   1).
 -define(MULTI, 2).
--define(DIR,   4).
+-define(DIR,   3).
 
--define(SYN,    1).
--define(SYNACK, 2).
--define(ACK,    3).
--define(RESET,  4).
+-define(SYN,    0).
+-define(SYNACK, 1).
+-define(ACK,    2).
+-define(RESET,  3).
 
 -define(Fields, [{type, 2, ?STD}, {phase, 3, ?SYN}, {seq, 3, 0}, {id, 96, 0}, {body, 0, 0}]).
 
