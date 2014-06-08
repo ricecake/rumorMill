@@ -26,9 +26,18 @@ serialize(Msg) when is_map(Msg) ->
 	<< <<(encode_field(hget(Msg, Field, Default), Size))/bits>> || {Field, Size, Default} <- ?Fields >>.
 	
 
-deserialize(Binary) when is_binary(Binary) -> #{}.
+deserialize(Raw) when is_binary(Raw) -> 
+	{List, <<>>} = lists:foldl(
+		fun({Field, 0, _Default},{List, Binary}) ->
+			{[{Field, Binary}|List], <<>>};
+		   ({Field, Size, _Default}, {List, Binary})-> 
+			<<Data:Size/bits, Rest/bits>> = Binary,
+			{[{Field, Data}|List], Rest} 
+		end, 
+		{[], Raw}, ?Fields),
+		maps:from_list(List).
 
-encode_field(Value, Size) when is_binary(Value) -> <<0:(Size - (bit_size(Value) rem Size)), Value/bits>>;
+encode_field(Value, Size) when is_binary(Value) -> <<0:(Size - bit_size(Value)), Value/bits>>;
 encode_field(Value, 0)    -> vlq:encode(Value);
 encode_field(Value, Size) -> <<Value:Size>>.
 
