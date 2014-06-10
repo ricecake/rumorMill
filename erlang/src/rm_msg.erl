@@ -12,6 +12,7 @@
 -define(SYNACK, 1).
 -define(ACK,    2).
 -define(RESET,  3).
+-define(CLOSE,  4).
 
 -define(Fields, [{type, 2, ?STD}, {phase, 3, ?SYN}, {seq, 3, 0}, {id, 96, 0}, {body, 0, 0}]).
 
