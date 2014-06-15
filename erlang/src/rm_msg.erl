@@ -24,7 +24,8 @@ set(Msg, Field, Value) when is_map(Msg) -> maps:put(Field, Value, Msg).
 get(Msg, Field) when is_map(Msg) -> maps:get(Field, Msg).
 
 serialize(Msg) when is_map(Msg) ->
-	<< <<(encode_field(hget(Msg, Field, Default), Size))/bits>> || {Field, Size, Default} <- ?Fields >>.
+	Encoded = << <<(encode_field(hget(Msg, Field, Default), Size))/bits>> || {Field, Size, Default} <- ?Fields >>,
+        << (size(Encoded)):32/integer, Encoded/bits >>.
 	
 
 deserialize(Raw) when is_binary(Raw) -> 
