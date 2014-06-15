@@ -23,5 +23,7 @@ start_link() ->
 %% ===================================================================
 
 init([]) ->
-    {ok, { {one_for_one, 5, 10}, []} }.
+    {ok, _} = ranch:start_listener(rm_tcp, 10,
+		ranch_tcp, [{port, 5555}], rm_tcp_protocol, []),
+    {ok, { {one_for_one, 5, 10}, [?CHILD(rm_tcp_sup, supervisor)]} }.
 
