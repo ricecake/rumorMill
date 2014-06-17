@@ -1,3 +1,3 @@
 -module(rm_nameMap).
 
--export([id_to_ip/1, ip_to_id/1]).
+-export([add/2, remove/2, id_to_ip/1, ip_to_id/1]).
