@@ -1,6 +1,9 @@
 -module(rm_util).
 
--export([encodeDocket/1, decodeDocket/1, distance/2, bucketize/2]).
+-export([encodeDocket/1, decodeDocket/1, distance/2, bucketize/2, ip_to_bin/1, bin_to_ip/1]).
+
+ip_to_bin({Oct1, Oct2, Oct3, Oct4}) -> << Oct1:8/integer, Oct2:8/integer, Oct3:8/integer, Oct4:8/integer>>.
+bin_to_ip(<< Oct1:8/integer, Oct2:8/integer, Oct3:8/integer, Oct4:8/integer>>) -> {Oct1, Oct2, Oct3, Oct4}.
 
 encodeDocket(RoutingList) ->
         << <<(encItem(Recipient, Status))/bits >>
