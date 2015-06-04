@@ -29,7 +29,7 @@ pad(Width,Binary) -> <<Binary/binary, (crypto:rand_bytes(Width - (size(Binary) r
 crypt(Key, Data) when is_list(Key) -> crypt(list_to_binary(Key), Data);
 crypt(Key, Data) ->
 	Hash    = hash(Data),
-	Prepped = << 16#deadbeef:32, (size(Data)):32, 0:64, Hash:?hash_bits/bits, Data/binary >>,
+	Prepped = << 16#deadbeef:32, (size(Data)):32, Hash:?hash_bits/bits, Data/binary >>,
 	Packed  = pad(?block_bytes, Prepped),
 	Iv      = crypto:rand_bytes(?block_bytes),
 	Cipher  = crypto:block_encrypt(?block_cipher, Key, Iv, Packed),
