@@ -1,4 +1,4 @@
--module(rumor_mill_conn).
+-module(rumor_mill_msg).
 -behaviour(gen_fsm).
 -define(SERVER, ?MODULE).
 
