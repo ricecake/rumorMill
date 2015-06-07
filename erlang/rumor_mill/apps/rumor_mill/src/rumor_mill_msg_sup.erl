@@ -1,9 +1,9 @@
 %%%-------------------------------------------------------------------
-%% @doc rumor_mill active connection supervisor.
+%% @doc rumor_mill message processing supervisor.
 %% @end
 %%%-------------------------------------------------------------------
 
--module('rumor_mill_conn_sup').
+-module('rumor_mill_msg_sup').
 
 -behaviour(supervisor).
 
