@@ -32,6 +32,8 @@ init(Args) ->
 handle_call(_Request, _From, State) ->
     {reply, ok, State}.
 
+handle_cast({data, Data}, State) ->
+    {noreply, State};
 handle_cast(_Msg, State) ->
     {noreply, State}.
 
