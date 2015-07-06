@@ -7,6 +7,7 @@
 %% ------------------------------------------------------------------
 
 -export([start_link/0]).
+-export([handle/2]).
 
 %% ------------------------------------------------------------------
 %% gen_fsm Function Exports
@@ -22,6 +23,8 @@
 
 start_link() ->
     gen_fsm:start_link(?MODULE, [], []).
+
+handle(Channel, Message) -> ok.
 
 %% ------------------------------------------------------------------
 %% gen_fsm Function Definitions
