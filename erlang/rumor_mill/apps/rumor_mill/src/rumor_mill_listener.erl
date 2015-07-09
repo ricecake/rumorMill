@@ -50,3 +50,5 @@ code_change(_OldVsn, State, _Extra) ->
 %% Internal Function Definitions
 %% ------------------------------------------------------------------
 
+handle_message(Channel, Message) ->
+         rumor_mill_msg:handle(Channel, Message).
