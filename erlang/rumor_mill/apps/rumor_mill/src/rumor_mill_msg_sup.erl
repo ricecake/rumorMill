@@ -28,7 +28,9 @@ start_link() ->
 
 %% Child :: {Id,StartFunc,Restart,Shutdown,Type,Modules}
 init([]) ->
-    {ok, { {one_for_all, 0, 1}, []} }.
+    {ok, { {simple_one_for_one, 5, 10}, [
+        {rumor_mill_msg, {rumor_mill_msg, start_link, []}, transient, 5000, worker, [rumor_mill_msg]}
+    ]} }.
 
 %%====================================================================
 %% Internal functions
